@@ -1,0 +1,29 @@
+{
+  "name": "doublespark/contao-faq-generator",
+  "type": "ds-contao-bundle",
+  "description": "Generates FAQ content using AlsoAsked and Chat GPT",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jamie Devine",
+      "homepage": "https://www.doublespark.co.uk"
+    }
+  ],
+  "require": {
+    "php": ">=8.0.0",
+    "contao/core-bundle": "^5.0|^4.0",
+    "AlsoAsked/also-asked-php": "1.0.0"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.10",
+    "phpunit/phpunit": "^10.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Doublespark\\FaqGeneratorBundle\\": "src/"
+    }
+  },
+  "extra": {
+    "contao-manager-plugin": "Doublespark\\FaqGeneratorBundle\\ContaoManager\\Plugin"
+  }
+}

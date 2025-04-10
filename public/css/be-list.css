@@ -1,0 +1,22 @@
+span.icn {
+    display:inline-block;
+    height:15px;
+    width:15px;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    margin-right:5px;
+    position:relative;
+    top:3px;
+}
+
+span.icn-phrase {
+    background-image:url('/bundles/faqgenerator/icons/list.svg');
+}
+
+span.icn-question {
+    background-image:url('/bundles/faqgenerator/icons/question.svg');
+}
+
+html[data-color-scheme="dark"] span.icn-phrase { background-image:url('/bundles/faqgenerator/icons/list-drk.svg'); }
+html[data-color-scheme="dark"] span.icn-question { background-image:url('/bundles/faqgenerator/icons/question-drk.svg'); }
