@@ -38,6 +38,12 @@ $GLOBALS['TL_DCA']['tl_ds_faq_question'] = array
             'fields'                  => array('question'),
             'format'                  => '%s',
         ),
+        'operations' => array(
+            'generateQuestions' => array(
+                'href' => 'key=generateQuestions',
+                'icon' => '',
+            )
+        )
     ),
 
 	// Palettes

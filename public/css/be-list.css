@@ -20,3 +20,33 @@ span.icn-question {
 
 html[data-color-scheme="dark"] span.icn-phrase { background-image:url('/bundles/faqgenerator/icons/list-drk.svg'); }
 html[data-color-scheme="dark"] span.icn-question { background-image:url('/bundles/faqgenerator/icons/question-drk.svg'); }
+
+
+.fg-generator-inner {
+    padding:1rem;
+}
+
+.fg-generator-inner h1 {
+    margin-bottom:1rem;
+}
+
+.fg-back {
+    padding-top:12px;
+    padding-right:15px;
+    float:right;
+}
+
+.fg-btn {
+    display:inline-block;
+    padding:.6rem 1rem;
+    border:none;
+}
+
+.fg-btn:hover {
+    background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+}
+
+.fg-btn-generate {
+    color:#FFF;
+    background:darkgreen;
+}

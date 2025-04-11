@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autoconfigure: true
+
+    Doublespark\FaqGeneratorBundle\Controller\BackendGenerateQuestionsController:
+        public: true
+        arguments:
+            - '@contao.framework'
+            - '@request_stack'
+            - '@twig'
