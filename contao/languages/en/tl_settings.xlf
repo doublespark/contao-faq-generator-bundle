@@ -10,6 +10,12 @@
       <trans-unit id="tl_settings.fg_alsoAskedApiKey.1">
         <source>The API key from AlsoAsked</source>
       </trans-unit>
+      <trans-unit id="tl_settings.fg_alsoAskedApiEnv.0">
+        <source>AlsoAsked API Environment</source>
+      </trans-unit>
+      <trans-unit id="tl_settings.fg_alsoAskedApiEnv.1">
+        <source>Whether the API sandbox or production environment is being used</source>
+      </trans-unit>
       <trans-unit id="tl_settings.fg_openAiApiKey.0">
         <source>OpenAI API Key</source>
       </trans-unit>
