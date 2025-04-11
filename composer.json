@@ -11,8 +11,7 @@
   ],
   "require": {
     "php": ">=8.0.0",
-    "contao/core-bundle": "^5.0|^4.13",
-    "AlsoAsked/also-asked-php": "1.0.0"
+    "contao/core-bundle": "^5.0|^4.13"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10",
