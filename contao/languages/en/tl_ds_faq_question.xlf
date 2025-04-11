@@ -1,0 +1,12 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_ds_faq_question.php" source-language="en" target-language="cs">
+    <body>
+      <trans-unit id="tl_ds_faq_question.generateQuestions.0">
+        <source>Generate Questions</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.generateQuestions.1">
+        <source>Generate questions</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
