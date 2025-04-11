@@ -2,12 +2,14 @@
     <a href="{{ backHref }}" class="header_back" accesskey="b" data-action="contao--scroll-offset#discard" title="Back to the previous page">Go back</a>
 </div>
 <div class="fg-generator-inner tl_form">
-    <form>
+    <form method="post">
         <h1>Generate Questions</h1>
         <p>Generating questions for the root phrase: {{ rootPhrase }}</p>
         <p>Any existing questions will be replaced.</p>
         <div class="fg-generator-actions">
             <button class="fg-btn fg-btn-generate">Generate now</button>
         </div>
+        <input type="hidden" name="FORM_SUBMIT" value="{{ formId }}"/>
+        <input type="hidden" name="REQUEST_TOKEN" value="{{ requestToken }}"/>
     </form>
 </div>

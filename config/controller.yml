@@ -8,3 +8,5 @@ services:
             - '@contao.framework'
             - '@request_stack'
             - '@twig'
+            - '@database_connection'
+            - '@contao.csrf.token_manager'
