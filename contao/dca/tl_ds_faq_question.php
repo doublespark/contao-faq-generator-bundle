@@ -17,7 +17,8 @@ $GLOBALS['TL_DCA']['tl_ds_faq_question'] = array
 				'pid,published' => 'index',
 			)
 		),
-        'label' => 'Questions'
+        'label' => 'Questions',
+        'notCopyable' => true
 	),
 
 	// List
