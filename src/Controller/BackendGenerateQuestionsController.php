@@ -43,11 +43,17 @@ class BackendGenerateQuestionsController {
             return new RedirectResponse($this->getBackUrl($request));
         }
 
+        $errors = [];
+
         if($request->request->get('FORM_SUBMIT') === $this->getFormId($request))
         {
             if($rootPhrase)
             {
-                $this->fetchQuestions((int)$dc->id, $rootPhrase);
+                try {
+                    $this->fetchQuestions((int)$dc->id, $rootPhrase);
+                } catch (\Exception $e) {
+                    $errors[] = $e->getMessage();
+                }
             }
         }
 
@@ -56,6 +62,7 @@ class BackendGenerateQuestionsController {
             'formId' => $this->getFormId($request),
             'backHref' => $this->getBackUrl($request),
             'rootPhrase' => $rootPhrase,
+            'errors' => $errors,
         ]);
     }
 
@@ -109,6 +116,13 @@ class BackendGenerateQuestionsController {
 
         $response = curl_exec($curl);
 
+        if(curl_errno($curl))
+        {
+            $errorMsg = curl_error($curl);
+
+            throw new \Exception('Could not fetch questions: '.$errorMsg);
+        }
+
         $arrResponse = json_decode($response,true);
 
         if(isset($arrResponse['queries']) && is_array($arrResponse['queries']))
@@ -119,6 +133,17 @@ class BackendGenerateQuestionsController {
                 {
                     $this->saveResult($result, $pid);
                 }
+            }
+        }
+        else
+        {
+            if(isset($arrResponse['message']))
+            {
+                throw new \Exception('Could not fetch questions: '.$arrResponse['message']);
+            }
+            else
+            {
+                throw new \Exception('Unexpected response from AlsoAsked');
             }
         }
     }

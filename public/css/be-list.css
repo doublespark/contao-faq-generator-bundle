@@ -50,3 +50,15 @@ html[data-color-scheme="dark"] span.icn-question { background-image:url('/bundle
     color:#FFF;
     background:darkgreen;
 }
+
+.fg-errors {
+    margin-bottom:1.2rem;
+    ul,li {
+        padding:0;
+        margin:0;
+        list-style:none;
+    }
+    li {
+        color:red;
+    }
+}

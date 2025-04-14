@@ -4,6 +4,15 @@
 <div class="fg-generator-inner tl_form">
     <form method="post">
         <h1>Generate Questions</h1>
+        {% if errors %}
+            <div class="fg-errors">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         <p>Generating questions for the root phrase: {{ rootPhrase }}</p>
         <p>Any existing questions will be replaced.</p>
         <div class="fg-generator-actions">
