@@ -86,7 +86,7 @@ class BackendGenerateQuestionsController {
         $config = $this->framework->getAdapter(Config::class);
 
         $apiKey = $config->get('fg_alsoAskedApiKey') ?? '';
-        $apiEnv = $config->get('fg_alsoAskedApiEnv') ?? '';
+        $apiEnv = $config->get('fg_alsoAskedApiEnv') ?? 'production';
 
         if(empty($apiKey))
         {
