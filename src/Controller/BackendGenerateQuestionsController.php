@@ -21,9 +21,7 @@ class BackendGenerateQuestionsController {
     public function __construct(
         private ContaoFramework $framework,
         private RequestStack $requestStack,
-        private Environment $twig,
-        private Connection $connection,
-        private CsrfTokenManagerInterface $csrfTokenManager
+        private Connection $connection
     ){}
 
     public function generateQuestionsAction(DataContainer $dc): Response
