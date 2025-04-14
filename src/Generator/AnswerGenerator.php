@@ -81,11 +81,12 @@ class AnswerGenerator {
         $config = $this->framework->getAdapter(Config::class);
 
         $apiKey = $config->get('fg_openAiApiKey') ?? '';
+        $model = $config->get('fg_openAiApiModel') ?? 'gpt-4o-mini';
 
         $curl = curl_init();
 
         $arrBody = [
-            'model' => 'gpt-4o',
+            'model' => $model,
             'instructions' => 'You will be given a series of questions in CSV format, update the CSV to answer each question and then return the updated CSV content. The "Question" column can be omitted from the returned CSV.',
             'input' => $questionsCsv
         ];

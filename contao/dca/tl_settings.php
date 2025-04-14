@@ -7,6 +7,7 @@ PaletteManipulator::create()
     ->addField('fg_alsoAskedApiKey', 'faq_generator_legend', PaletteManipulator::POSITION_APPEND)
     ->addField('fg_alsoAskedApiEnv', 'faq_generator_legend', PaletteManipulator::POSITION_APPEND)
     ->addField('fg_openAiApiKey', 'faq_generator_legend', PaletteManipulator::POSITION_APPEND)
+    ->addField('fg_openAiApiModel', 'faq_generator_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('default', 'tl_settings')
 ;
 
@@ -27,4 +28,14 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['fg_alsoAskedApiEnv'] = [
 $GLOBALS['TL_DCA']['tl_settings']['fields']['fg_openAiApiKey'] = [
     'inputType' => 'text',
     'eval'      => array('mandatory'=>false, 'tl_class'=>'w100')
+];
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['fg_openAiApiModel'] = [
+    'inputType' => 'select',
+    'default' => 'gpt-4o-mini',
+    'options' => [
+        'gpt-4o-mini' => 'GPT-4o mini',
+        'gpt-4o' => 'GPT-4o'
+    ],
+    'eval' => array('mandatory'=>true, 'tl_class'=>'w100')
 ];
