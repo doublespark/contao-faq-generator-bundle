@@ -47,41 +47,23 @@ class BackendGenerateQuestionsController {
             return new RedirectResponse($this->getBackUrl($request));
         }
 
-        $errors = [];
-
-        if($request->request->get('FORM_SUBMIT') === $this->getFormId($request))
+        if($rootPhrase)
         {
-            if($rootPhrase)
-            {
-                try {
+            try {
 
-                    $this->fetchQuestions((int)$dc->id, $rootPhrase);
-                    $message->addConfirmation('Successfully fetched questions for: ' . $rootPhrase);
-                    return new RedirectResponse($this->getBackUrl($request));
+                $this->fetchQuestions((int)$dc->id, $rootPhrase);
+                $message->addConfirmation('Successfully fetched questions for: ' . $rootPhrase);
 
-                } catch (\Exception $e) {
-                    $errors[] = $e->getMessage();
-                }
+            } catch (\Exception $e) {
+                $message->addError($e->getMessage());
             }
         }
+        else
+        {
+            $message->addError('The root phrase/question cannot be empty');
+        }
 
-        return $this->generateResponse([
-            'requestToken' => $this->csrfTokenManager->getDefaultTokenValue(),
-            'formId' => $this->getFormId($request),
-            'backHref' => $this->getBackUrl($request),
-            'rootPhrase' => $rootPhrase,
-            'errors' => $errors,
-        ]);
-    }
-
-    private function generateResponse(array $arrTemplateVars): Response
-    {
-        return new Response($this->twig->render('@Contao/backend/generate-questions.html.twig', $arrTemplateVars));
-    }
-
-    private function getFormId(Request $request): string
-    {
-        return 'tl_ds_faq_question_'.$request->query->get('key');
+        return new RedirectResponse($this->getBackUrl($request));
     }
 
     private function getBackUrl(Request $request): string
@@ -147,6 +129,12 @@ class BackendGenerateQuestionsController {
                 foreach($query['results'] as $result)
                 {
                     $question = $result['question'];
+
+                    // Ignore any rows that do not have sub-results
+                    if(count($result['results']) === 0)
+                    {
+                        continue;
+                    }
 
                     // Skip any duplicates
                     if(!in_array($question, $arrQuestions))
