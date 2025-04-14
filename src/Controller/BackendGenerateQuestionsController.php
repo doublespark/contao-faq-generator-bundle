@@ -35,9 +35,13 @@ class BackendGenerateQuestionsController {
 
         $request = $this->requestStack->getCurrentRequest();
 
+        /**
+         * @var Message $message
+         */
+        $message = $this->framework->getAdapter(Message::class);
+
         if($pid !== 0)
         {
-            $message = $this->framework->getAdapter(Message::class);
             $message->addError('This action can only be performed on root phrases.');
 
             return new RedirectResponse($this->getBackUrl($request));
@@ -50,7 +54,11 @@ class BackendGenerateQuestionsController {
             if($rootPhrase)
             {
                 try {
+
                     $this->fetchQuestions((int)$dc->id, $rootPhrase);
+                    $message->addConfirmation('Successfully fetched questions for: ' . $rootPhrase);
+                    return new RedirectResponse($this->getBackUrl($request));
+
                 } catch (\Exception $e) {
                     $errors[] = $e->getMessage();
                 }
@@ -130,13 +138,22 @@ class BackendGenerateQuestionsController {
 
         $arrResponse = json_decode($response,true);
 
+        $arrQuestions = [];
+
         if(isset($arrResponse['queries']) && is_array($arrResponse['queries']))
         {
             foreach($arrResponse['queries'] as $query)
             {
                 foreach($query['results'] as $result)
                 {
-                    $this->saveResult($result, $pid);
+                    $question = $result['question'];
+
+                    // Skip any duplicates
+                    if(!in_array($question, $arrQuestions))
+                    {
+                        $arrQuestions[] = $result['question'];
+                        $this->saveResult($result, $pid);
+                    }
                 }
             }
         }
@@ -145,6 +162,10 @@ class BackendGenerateQuestionsController {
             if(isset($arrResponse['message']))
             {
                 throw new \Exception('Could not fetch questions: '.$arrResponse['message']);
+            }
+            elseif(isset($arrResponse['status']))
+            {
+                throw new \Exception('Could not fetch questions: '.$arrResponse['status']);
             }
             else
             {
