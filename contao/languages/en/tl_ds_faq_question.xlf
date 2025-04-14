@@ -7,6 +7,12 @@
       <trans-unit id="tl_ds_faq_question.generateQuestions.1">
         <source>Generate questions</source>
       </trans-unit>
+      <trans-unit id="tl_ds_faq_question.generateAnswers.0">
+        <source>Generate answers</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.generateAnswers.1">
+        <source>Generate answers</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

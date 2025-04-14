@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Doublespark\FaqGeneratorBundle\Generator;
 
-class Answer {
+class Question {
 
+    protected int $id;
     protected string $question;
     protected string $answer;
 
-    public function __construct(string $question, string $answer)
+    public function __construct(int $id, string $question)
     {
-        $this->answer = $answer;
+        $this->id = $id;
         $this->question = $question;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getQuestion(): string
@@ -23,5 +29,10 @@ class Answer {
     public function getAnswer(): string
     {
         return $this->answer;
+    }
+
+    public function setAnswer(string $answer): void
+    {
+        $this->answer = $answer;
     }
 }

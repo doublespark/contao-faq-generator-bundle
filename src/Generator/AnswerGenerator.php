@@ -11,12 +11,72 @@ class AnswerGenerator {
 
     public function __construct(private ContaoFramework $framework){}
 
-    public function generate(array $arrQuestions): AnswerSet
+    public function generate(QuestionSet $questionSet): QuestionSet
     {
-        return $this->getResponse($arrQuestions);
+        $csv = $this->convertToCsv($questionSet);
+
+        $csv = $this->getResponse($csv);
+
+        $arrQuestions = $this->csvToArray($csv);
+
+        foreach($arrQuestions as $question)
+        {
+            $questionSet->getQuestion((int)$question['ID'])?->setAnswer($question['Answer']);
+        }
+
+        return $questionSet;
     }
 
-    public function getResponse(array $arrQuestions): AnswerSet
+    protected function convertToCsv(QuestionSet $questionSet): string
+    {
+        $fh = fopen('php://temp', 'r+');
+
+        fputcsv($fh, ['ID','Question','Answer'], ',', '"');
+
+        foreach ($questionSet as $question)
+        {
+            fputcsv($fh, [$question->getId(), $question->getQuestion(), ''], ',', '"');
+        }
+
+        rewind($fh);
+        $csv = stream_get_contents($fh);
+        fclose($fh);
+
+        return $csv;
+    }
+
+    protected function csvToArray(string $csv): array
+    {
+        if(empty($csv))
+        {
+            return [];
+        }
+
+        $rows = explode("\n", $csv);
+        $rows = array_filter($rows, 'trim');
+
+        $header = null;
+
+        $data = [];
+
+        foreach ($rows as $row)
+        {
+            $fields = str_getcsv($row, ",", '"');
+
+            if(!$header)
+            {
+                $header = $fields;
+            }
+            else
+            {
+                $data[] = array_combine($header, $fields);
+            }
+        }
+
+        return $data;
+    }
+
+    public function getResponse(string $questionsCsv): string
     {
         $config = $this->framework->getAdapter(Config::class);
 
@@ -24,28 +84,10 @@ class AnswerGenerator {
 
         $curl = curl_init();
 
-        $input = implode("\n", $arrQuestions);
-
         $arrBody = [
             'model' => 'gpt-4o',
-            'instructions' => 'Answer questions for a website FAQ section. Format answers as markdown. One answer per message.',
-            'input' => $input,
-            'text' => [
-                'format' => [
-                    'type' => 'json_schema',
-                    'name' => 'faq_set',
-                    'strict' => true,
-                    'schema' => [
-                        'type' => 'object',
-                        'properties' => [
-                            'question' => ['type' => 'string'],
-                            'answer' => ['type' => 'string'],
-                        ],
-                        'required' => ['question', 'answer'],
-                        'additionalProperties' => false,
-                    ]
-                ]
-            ]
+            'instructions' => 'You will be given a series of questions in CSV format, update the CSV to answer each question and then return the updated CSV content. The "Question" column can be omitted from the returned CSV.',
+            'input' => $questionsCsv
         ];
 
         curl_setopt_array($curl, [
@@ -73,21 +115,19 @@ class AnswerGenerator {
 
         $arrResponse = json_decode($response,true);
 
-        $arrResult = [];
-
         if(isset($arrResponse['status']) && $arrResponse['status'] == 'completed')
         {
+            // Should only be one message with the answer content
             foreach($arrResponse['output'] as $output)
             {
-                $questionAnswer = json_decode($output['content'][0]['text'], true);
-                $arrResult[] = new Answer($questionAnswer['question'], $questionAnswer['answer']);
+                return $output['content'][0]['text'];
             }
-
-            return new AnswerSet($arrResult);
         }
         else
         {
             throw new \Exception('Could not fetch answer content.');
         }
+
+        throw new \Exception('Could not fetch answer content.');
     }
 }

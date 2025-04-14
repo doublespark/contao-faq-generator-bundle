@@ -42,6 +42,10 @@ $GLOBALS['TL_DCA']['tl_ds_faq_question'] = array
             'generateQuestions' => array(
                 'href' => 'key=generateQuestions',
                 'icon' => '',
+            ),
+            'generateAnswers' => array(
+                'href' => 'key=generateAnswers',
+                'icon' => '',
             )
         )
     ),

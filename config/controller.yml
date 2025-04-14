@@ -10,3 +10,11 @@ services:
             - '@twig'
             - '@database_connection'
             - '@contao.csrf.token_manager'
+
+    Doublespark\FaqGeneratorBundle\Controller\BackendGenerateAnswersController:
+        public: true
+        arguments:
+            - '@contao.framework'
+            - '@request_stack'
+            - '@database_connection'
+            - '@Doublespark\FaqGeneratorBundle\Generator\AnswerGenerator'
