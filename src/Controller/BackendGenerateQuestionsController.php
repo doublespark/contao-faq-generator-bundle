@@ -88,6 +88,11 @@ class BackendGenerateQuestionsController {
         $apiKey = $config->get('fg_alsoAskedApiKey') ?? '';
         $apiEnv = $config->get('fg_alsoAskedApiEnv') ?? '';
 
+        if(empty($apiKey))
+        {
+            throw new \Exception('API Key is required, please set the AlsoAsked API key under Settings.');
+        }
+
         $uri = $apiEnv === 'production' ? 'https://alsoaskedapi.com/v1' : 'https://sandbox.alsoaskedapi.com/v1';
 
         $curl = curl_init();
