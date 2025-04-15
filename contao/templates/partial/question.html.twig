@@ -1,0 +1,13 @@
+<div class="fg-faq-question">
+    <h3>{{ question.question|raw }}</h3>
+    <div class="fg-faq-answer">
+        {{ question.answer|raw }}
+    </div>
+    {% if question.children %}
+        <div class="fg-faq-children">
+            {% for childQuestion in question.children %}
+                {% include '@Contao/partial/question.html.twig' with {'question': childQuestion} %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

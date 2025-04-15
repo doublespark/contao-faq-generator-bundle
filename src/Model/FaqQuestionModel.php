@@ -29,6 +29,9 @@ class FaqQuestionModel extends Model {
             }
         }
 
+        // Set on local model
+        $this->children = $children;
+
         return $children;
     }
 

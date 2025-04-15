@@ -1,0 +1,7 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+
+{% block content %}
+    {% for question in questions %}
+        {% include '@Contao/partial/question.html.twig' with {'question': question} %}
+    {% endfor %}
+{% endblock %}
