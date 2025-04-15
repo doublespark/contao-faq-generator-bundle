@@ -2,6 +2,7 @@
 
 use Contao\DataContainer;
 use Contao\DC_Table;
+use Doublespark\FaqGeneratorBundle\Options\GenerationStatusOptions;
 
 $GLOBALS['TL_DCA']['tl_ds_faq_question'] = array
 (
@@ -109,6 +110,14 @@ $GLOBALS['TL_DCA']['tl_ds_faq_question'] = array
 			'explanation'             => 'insertTags',
 			'sql'                     => "text NULL"
 		),
+        'status' => array
+        (
+            'filter'                  => true,
+            'inputType'               => 'select',
+            'options'                 => GenerationStatusOptions::getOptions(),
+            'eval'                    => array('tl_class'=>'w50'),
+            'sql'                     => "int(10) unsigned NOT NULL default 0"
+        ),
 		'published' => array
 		(
 			'toggle'                  => true,
