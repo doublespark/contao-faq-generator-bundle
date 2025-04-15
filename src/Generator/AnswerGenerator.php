@@ -97,9 +97,8 @@ class AnswerGenerator {
         curl_setopt_array($curl, [
               CURLOPT_URL => "https://api.openai.com/v1/responses",
               CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 120,
+              CURLOPT_TIMEOUT => 300,
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_HTTPHEADER => [
                   "Content-Type: application/json",
