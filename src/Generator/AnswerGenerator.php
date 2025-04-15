@@ -76,8 +76,11 @@ class AnswerGenerator {
         return $data;
     }
 
-    public function getResponse(string $questionsCsv): string
+    protected function getResponse(string $questionsCsv): string
     {
+        // Allow this to run for 2 mins
+        set_time_limit(120);
+
         $config = $this->framework->getAdapter(Config::class);
 
         $apiKey = $config->get('fg_openAiApiKey') ?? '';
@@ -96,7 +99,7 @@ class AnswerGenerator {
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
+              CURLOPT_TIMEOUT => 120,
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_HTTPHEADER => [
                   "Content-Type: application/json",
