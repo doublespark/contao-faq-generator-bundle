@@ -60,4 +60,16 @@ class QuestionSet implements Iterator {
     {
         $this->index = 0;
     }
+
+    public function count(): int
+    {
+        return count($this->questions);
+    }
+
+    public function clear(): void
+    {
+        $this->questions = [];
+        $this->keys = [];
+        $this->index = 0;
+    }
 }

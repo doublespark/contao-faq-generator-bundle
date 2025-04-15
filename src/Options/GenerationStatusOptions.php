@@ -11,6 +11,7 @@ class GenerationStatusOptions implements OptionInterface
     const REQUESTED = 1;
     const WORKING = 2;
     const COMPLETE = 3;
+    const FAILED = 4;
 
     /**
      * Returns an array of option key / value pairs
@@ -22,7 +23,8 @@ class GenerationStatusOptions implements OptionInterface
             static::NOT_STARTED => 'Not started',
             static::REQUESTED => 'Requested',
             static::WORKING => 'Working',
-            static::COMPLETE => 'Complete'
+            static::COMPLETE => 'Complete',
+            static::FAILED => 'Failed'
         );
     }
 

@@ -6,10 +6,14 @@ namespace Doublespark\FaqGeneratorBundle\Generator;
 
 use Contao\Config;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class AnswerGenerator {
 
-    public function __construct(private ContaoFramework $framework){}
+    public function __construct(
+        private ContaoFramework $framework,
+        private KernelInterface $kernel
+    ){}
 
     public function generate(QuestionSet $questionSet): QuestionSet
     {
@@ -52,6 +56,23 @@ class AnswerGenerator {
             return [];
         }
 
+        // ChatGPT has included formatting metadata, extract the CSV content
+        if(str_contains($csv, '```csv'))
+        {
+            $startsAt = strpos($csv, "```csv") + strlen("```csv");
+            $endsAt = strpos($csv, "```", $startsAt);
+            $csv = substr($csv, $startsAt, $endsAt - $startsAt);
+        }
+
+        $csv = trim($csv);
+
+        if(!str_starts_with($csv, 'ID,Answer'))
+        {
+            $filename = $this->saveCsvData($csv);
+
+            throw new \Exception("Chat GPT returned invalid CSV data, see var/logs/$filename");
+        }
+
         $rows = explode("\n", $csv);
         $rows = array_filter($rows, 'trim');
 
@@ -59,8 +80,11 @@ class AnswerGenerator {
 
         $data = [];
 
-        foreach ($rows as $row)
+        foreach ($rows as $index => $row)
         {
+            // Remove any trailing comma
+            $row = rtrim($row,',');
+
             $fields = str_getcsv($row, ",", '"');
 
             if(!$header)
@@ -69,6 +93,13 @@ class AnswerGenerator {
             }
             else
             {
+                if(count($header) !== count($fields))
+                {
+                    $filename = $this->saveCsvData($csv);
+
+                    throw new \Exception("CSV header and columns count did not match on row $index. See var/logs/$filename");
+                }
+
                 $data[] = array_combine($header, $fields);
             }
         }
@@ -78,9 +109,6 @@ class AnswerGenerator {
 
     protected function getResponse(string $questionsCsv): string
     {
-        // Allow this to run for 2 mins
-        set_time_limit(120);
-
         $config = $this->framework->getAdapter(Config::class);
 
         $apiKey = $config->get('fg_openAiApiKey') ?? '';
@@ -90,7 +118,7 @@ class AnswerGenerator {
 
         $arrBody = [
             'model' => $model,
-            'instructions' => 'You will be given a series of questions in CSV format, update the CSV to answer each question and then return the updated CSV content. The "Question" column can be omitted from the returned CSV. Try to write at least 200 words per answer.',
+            'instructions' => 'You will be given a set of questions in CSV format, update the CSV to answer each question and then return the updated CSV content. The "Question" column can be omitted from the returned CSV. Try to write at least 200 words per answer. Only respond with the CSV content.',
             'input' => $questionsCsv
         ];
 
@@ -132,5 +160,16 @@ class AnswerGenerator {
         }
 
         throw new \Exception('Could not fetch answer content.');
+    }
+
+    protected function saveCsvData(string $csvData): string
+    {
+        $id = uniqid();
+        $date = date('Y-m-d-H-i-s');
+        $filename =  "faq-$id-$date.csv";
+
+        file_put_contents($this->kernel->getLogDir().'/'.$filename, $csvData);
+
+        return $filename;
     }
 }

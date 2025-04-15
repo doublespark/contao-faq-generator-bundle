@@ -6,8 +6,7 @@ namespace Doublespark\FaqGeneratorBundle\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
-use Contao\Image;
-use Contao\Input;
+use Doublespark\FaqGeneratorBundle\Options\GenerationStatusOptions;
 
 #[AsCallback(table: 'tl_ds_faq_question', target: 'list.label.label')]
 class QuestionListLabelListener
@@ -16,7 +15,9 @@ class QuestionListLabelListener
     {
         if((int)$row['pid'] === 0)
         {
-            return "<span class=\"icn icn-phrase\"></span>".$row['phrase'];
+            $status = GenerationStatusOptions::getOptionLabel($row['status']);
+
+            return "<span class=\"icn icn-phrase\"></span>".$row['phrase']."<span class=\"faq-sts\">AI Content: ".$status."</span>";
         }
 
         return "<span class=\"icn icn-question\"></span>".$row['question'];

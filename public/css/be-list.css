@@ -62,3 +62,7 @@ html[data-color-scheme="dark"] span.icn-question { background-image:url('/bundle
         color:red;
     }
 }
+
+.faq-sts {
+    float:right;
+}

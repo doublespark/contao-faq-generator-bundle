@@ -9,6 +9,8 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\DataContainer;
 use Contao\Message;
 use Doctrine\DBAL\Connection;
+use Doublespark\FaqGeneratorBundle\Model\FaqQuestionModel;
+use Doublespark\FaqGeneratorBundle\Options\GenerationStatusOptions;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
