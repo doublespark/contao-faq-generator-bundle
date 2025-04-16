@@ -1,6 +1,15 @@
 <?xml version="1.0" ?><xliff version="1.1">
   <file datatype="php" original="contao/languages/en/tl_ds_faq_question.php" source-language="en" target-language="cs">
     <body>
+      <trans-unit id="tl_ds_faq_question.config_legend">
+        <source>Configuration</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.detail_legend">
+        <source>Details</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.publish_legend">
+        <source>Publish</source>
+      </trans-unit>
       <trans-unit id="tl_ds_faq_question.generateQuestions.0">
         <source>Generate Questions</source>
       </trans-unit>
@@ -12,6 +21,42 @@
       </trans-unit>
       <trans-unit id="tl_ds_faq_question.generateAnswers.1">
         <source>Generate answers</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.type.0">
+        <source>Type</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.type.1">
+        <source>Whether this is a section root or a sub-question. This is set automatically.</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.phrase.0">
+        <source>Root phrase / question</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.phrase.1">
+        <source>The root phrase from which the FAQ questions will be generated.</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.question.0">
+        <source>Question</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.question.1">
+        <source>The FAQ question for this item.</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.answer.0">
+        <source>Answer</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_answer.answer.1">
+        <source>The question answer.</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.published.0">
+        <source>Published</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_answer.published.1">
+        <source>Whether or not this will be included in the FAQs.</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_question.status.0">
+        <source>Status</source>
+      </trans-unit>
+      <trans-unit id="tl_ds_faq_answer.status.1">
+        <source>The status of the AI content generation for this question.</source>
       </trans-unit>
     </body>
   </file>
