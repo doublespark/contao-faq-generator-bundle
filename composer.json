@@ -1,5 +1,5 @@
 {
-  "name": "doublespark/contao-faq-generator",
+  "name": "doublespark/contao-faq-generator-bundle",
   "type": "ds-contao-bundle",
   "description": "Generates FAQ content using AlsoAsked and Chat GPT",
   "license": "MIT",
