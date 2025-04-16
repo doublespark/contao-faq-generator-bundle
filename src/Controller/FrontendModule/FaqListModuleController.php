@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsFrontendModule(category: 'miscellaneous', type: FaqListModuleController::TYPE, template: '@Contao/frontend_module/faq-list')]
 class FaqListModuleController extends AbstractFrontendModuleController
 {
-    public const TYPE = 'fg_faq_list_module';
+    public const TYPE = 'fg-faq-list';
 
     public function __construct(private ContaoFramework $framework) {}
 
@@ -67,9 +67,14 @@ class FaqListModuleController extends AbstractFrontendModuleController
         return $template->getResponse();
     }
 
-    protected function nestedChildren(FaqQuestionModel $objQuestion): array
+    protected function nestedChildren(FaqQuestionModel $objQuestion, int|null $level=null): array
     {
         $children = [];
+
+        if(is_null($level))
+        {
+            $level = 1;
+        }
 
         if(isset($objQuestion->children) && is_array($objQuestion->children))
         {
@@ -79,7 +84,8 @@ class FaqListModuleController extends AbstractFrontendModuleController
                     'id' => $objQuestionChild->id,
                     'question' => $objQuestionChild->question,
                     'answer' => $objQuestionChild->answer,
-                    'children' => $this->nestedChildren($objQuestionChild)
+                    'level' => $level,
+                    'children' => $this->nestedChildren($objQuestionChild, $level+1),
                 ];
             }
         }
@@ -93,6 +99,7 @@ class FaqListModuleController extends AbstractFrontendModuleController
             'id' => $objQuestion->id,
             'question' => $objQuestion->question,
             'answer' => $objQuestion->answer,
+            'level' => 1,
             'children' => []
         ];
 

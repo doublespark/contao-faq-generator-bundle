@@ -8,10 +8,10 @@
       <trans-unit id="MOD.ds_faq.1">
         <source>Generate and manage generated FAQ content.</source>
       </trans-unit>
-      <trans-unit id="FMD.fg_faq_list_module.0">
+      <trans-unit id="FMD.fg-faq-list.0">
         <source>Generated FAQ List</source>
       </trans-unit>
-      <trans-unit id="FMD.fg_faq_list_module.1">
+      <trans-unit id="FMD.fg-faq-list.1">
         <source>Output generated FAQ content</source>
       </trans-unit>
     </body>
