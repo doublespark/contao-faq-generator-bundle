@@ -44,6 +44,11 @@ class FaqListModuleController extends AbstractFrontendModuleController
         {
             if($objSection instanceof FaqQuestionModel)
             {
+                if((int)$objSection->published !== 1)
+                {
+                    continue;
+                }
+
                 $arrChildren = $objSection->getChildren();
 
                 if($model->fg_faqListMode === 'flat')
