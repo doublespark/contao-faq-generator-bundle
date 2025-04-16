@@ -8,14 +8,21 @@ class FaqQuestionModel extends Model {
 
     protected static $strTable = 'tl_ds_faq_question';
 
-    public function getChildren(int|null $pid=null): array
+    public function getChildren(bool $publishedOnly=true, int|null $pid=null): array
     {
         if(is_null($pid))
         {
             $pid = $this->id;
         }
 
-        $result = static::findBy(['pid=?', 'published=1'], [$pid]);
+        if($publishedOnly)
+        {
+            $result = static::findBy(['pid=?', 'published=1'], [$pid]);
+        }
+        else
+        {
+            $result = static::findBy(['pid=?'], [$pid]);
+        }
 
         $children = [];
 
@@ -25,7 +32,7 @@ class FaqQuestionModel extends Model {
             {
                 $children[] = $question;
 
-                $question->children = $this->getChildren($question->id);
+                $question->children = $this->getChildren($publishedOnly,$question->id);
             }
         }
 
