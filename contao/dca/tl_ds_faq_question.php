@@ -57,7 +57,7 @@ $GLOBALS['TL_DCA']['tl_ds_faq_question'] = array
         '__selector__' => array('type'),
         'default' => '{config_legend},type;{publish_legend},published',
         'root' => '{config_legend},type;{detail_legend},phrase;{publish_legend},published',
-		'question' => '{config_legend},type;{title_legend},question;{answer_legend},answer;{publish_legend},published'
+		'question' => '{config_legend},type;{detail_legend},question,answer;{publish_legend},published'
 	),
 
 	// Fields
