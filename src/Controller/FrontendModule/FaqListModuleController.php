@@ -102,7 +102,7 @@ class FaqListModuleController extends AbstractFrontendModuleController
                     'children' => $this->nestedChildren($objQuestionChild, $level+1),
                 ];
 
-                $this->faqSchemaGenerator->addQuestion($objQuestionChild->question, $objQuestionChild->answer);
+                $this->faqSchemaGenerator->addQuestion($objQuestionChild->question ?? '', $objQuestionChild->answer ?? '');
             }
         }
 
@@ -119,7 +119,7 @@ class FaqListModuleController extends AbstractFrontendModuleController
             'children' => []
         ];
 
-        $this->faqSchemaGenerator->addQuestion($objQuestion->question, $objQuestion->answer);
+        $this->faqSchemaGenerator->addQuestion($objQuestion->question ?? '', $objQuestion->answer ?? '');
 
         if(isset($objQuestion->children) && is_array($objQuestion->children))
         {
