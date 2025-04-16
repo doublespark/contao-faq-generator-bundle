@@ -75,6 +75,7 @@ class FaqListModuleController extends AbstractFrontendModuleController
         }
 
         $template->set('questions', $arrQuestions);
+        $template->set('mode', $model->fg_faqListMode ?? '');
 
         $GLOBALS['TL_BODY'][] = $this->faqSchemaGenerator->generate();
 
