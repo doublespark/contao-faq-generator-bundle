@@ -11,6 +11,8 @@ use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use Doublespark\FaqGeneratorBundle\Model\FaqQuestionModel;
+use Doublespark\FaqGeneratorBundle\Schema\FaqSchemaGenerator;
+use Doublespark\FaqGeneratorBundle\Schema\FaqSchemaGeneratorFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +21,12 @@ class FaqListModuleController extends AbstractFrontendModuleController
 {
     public const TYPE = 'fg-faq-list';
 
-    public function __construct(private ContaoFramework $framework) {}
+    protected FaqSchemaGenerator $faqSchemaGenerator;
+
+    public function __construct(private ContaoFramework $framework, FaqSchemaGeneratorFactory $faqSchemaGeneratorFactory)
+    {
+        $this->faqSchemaGenerator = $faqSchemaGeneratorFactory->create();
+    }
 
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
@@ -69,6 +76,8 @@ class FaqListModuleController extends AbstractFrontendModuleController
 
         $template->set('questions', $arrQuestions);
 
+        $GLOBALS['TL_BODY'][] = $this->faqSchemaGenerator->generate();
+
         return $template->getResponse();
     }
 
@@ -92,6 +101,8 @@ class FaqListModuleController extends AbstractFrontendModuleController
                     'level' => $level,
                     'children' => $this->nestedChildren($objQuestionChild, $level+1),
                 ];
+
+                $this->faqSchemaGenerator->addQuestion($objQuestionChild->question, $objQuestionChild->answer);
             }
         }
 
@@ -107,6 +118,8 @@ class FaqListModuleController extends AbstractFrontendModuleController
             'level' => 1,
             'children' => []
         ];
+
+        $this->faqSchemaGenerator->addQuestion($objQuestion->question, $objQuestion->answer);
 
         if(isset($objQuestion->children) && is_array($objQuestion->children))
         {
