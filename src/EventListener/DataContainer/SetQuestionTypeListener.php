@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doublespark\FaqGeneratorBundle\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\Database;
 use Contao\DataContainer;
 use Contao\Input;
 
@@ -21,6 +22,18 @@ class SetQuestionTypeListener
         if((int)Input::get('pid') === 0)
         {
             $GLOBALS['TL_DCA']['tl_ds_faq_question']['fields']['type']['default'] = 'root';
+        }
+        elseif (Input::get('mode') == DataContainer::PASTE_AFTER)
+        {
+            $objQuestion = Database::getInstance()
+                ->prepare("SELECT * FROM " . $dc->table . " WHERE id=?")
+                ->limit(1)
+                ->execute(Input::get('pid'));
+
+            if($objQuestion->pid == 0)
+            {
+                $GLOBALS['TL_DCA']['tl_ds_faq_question']['fields']['type']['default'] = 'root';
+            }
         }
     }
 }
