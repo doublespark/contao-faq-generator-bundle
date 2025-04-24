@@ -20,7 +20,7 @@ class GenerateQuestionButtonCallbackListener
                 Backend::addToUrl($href . '&amp;id=' . $row['id']),
                 StringUtil::specialchars($title),
                 $attributes,
-                'GQ'
+                '[Q] '
             );
         }
 

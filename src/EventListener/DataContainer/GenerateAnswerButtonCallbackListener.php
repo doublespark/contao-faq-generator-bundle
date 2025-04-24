@@ -20,7 +20,7 @@ class GenerateAnswerButtonCallbackListener
                 Backend::addToUrl($href . '&amp;id=' . $row['id']),
                 StringUtil::specialchars($title),
                 $attributes,
-                'GA'
+                '[A] '
             );
         }
 
