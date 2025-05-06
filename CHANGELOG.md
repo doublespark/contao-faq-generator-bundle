@@ -5,3 +5,7 @@
 - Update button format
 - Fix pasting root
 
+## Version 1.0.3 (2025-05-06)
+- Handle ChatGPT surrounded CSV in backticks
+- Try to get ChatGPT to use British-style writing
+
