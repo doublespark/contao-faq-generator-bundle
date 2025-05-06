@@ -124,7 +124,7 @@ class AnswerGenerator {
 
         $arrBody = [
             'model' => $model,
-            'instructions' => 'You will be given a set of questions in CSV format, update the CSV to answer each question and then return the updated CSV content. The "Question" column can be omitted from the returned CSV. Try to write at least 200 words per answer. Only respond with the CSV content.',
+            'instructions' => 'You will be given a set of questions in CSV format, update the CSV to answer each question and then return the updated CSV content. The "Question" column can be omitted from the returned CSV. Try to write at least 200 words per answer. Use British English. Use GBP for all prices. Only respond with the CSV content.',
             'input' => $questionsCsv
         ];
 
