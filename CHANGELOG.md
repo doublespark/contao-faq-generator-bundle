@@ -9,3 +9,7 @@
 - Handle ChatGPT surrounded CSV in backticks
 - Try to get ChatGPT to use British-style writing
 
+## Version 1.0.4 (2025-05-06)
+- Use CSV service for working with CSV
+- Add support for tests
+
