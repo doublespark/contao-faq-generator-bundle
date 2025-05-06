@@ -2,3 +2,4 @@
 .idea
 error_log
 .phpunit.result.cache
+vendor

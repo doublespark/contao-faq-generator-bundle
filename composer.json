@@ -21,5 +21,14 @@
   },
   "extra": {
     "contao-manager-plugin": "Doublespark\\FaqGeneratorBundle\\ContaoManager\\Plugin"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "contao-components/installer": true,
+      "php-http/discovery": true
+    }
   }
 }
