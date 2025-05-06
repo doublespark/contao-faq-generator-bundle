@@ -64,6 +64,12 @@ class AnswerGenerator {
             $csv = substr($csv, $startsAt, $endsAt - $startsAt);
         }
 
+        // Check if ChatGPT surrounded the CSV with ```
+        if(str_starts_with($csv, '```'))
+        {
+            $csv = str_replace('```', '', $csv);
+        }
+
         $csv = trim($csv);
 
         if(!str_starts_with($csv, 'ID,Answer'))
