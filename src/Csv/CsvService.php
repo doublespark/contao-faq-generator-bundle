@@ -38,6 +38,8 @@ class CsvService {
             return [];
         }
 
+        $originalCSV = $csv;
+
         // ChatGPT has included formatting metadata, extract the CSV content
         if(str_contains($csv, '```csv'))
         {
@@ -58,7 +60,7 @@ class CsvService {
         {
             if($this->loggingEnabled)
             {
-                $filename = $this->saveCsvData($csv);
+                $filename = $this->saveCsvData($originalCSV);
 
                 throw new \Exception("Chat GPT returned invalid CSV data, see var/logs/$filename");
             }
@@ -92,7 +94,7 @@ class CsvService {
                 {
                     if($this->loggingEnabled)
                     {
-                        $filename = $this->saveCsvData($csv);
+                        $filename = $this->saveCsvData($originalCSV);
 
                         throw new \Exception("CSV header and columns count did not match on row $index. See var/logs/$filename");
                     }
